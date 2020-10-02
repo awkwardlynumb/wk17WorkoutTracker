@@ -2,16 +2,44 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const excercise = new Schema({
-  type: String,
-  name: String,
-  duration: Number,
-  weight: Number,
-  reps: Number,
-  sets: Number,
-  distance: Number,
-});
+const workout = new Schema(
+  {
+    day: {
+      type: Date,
+      default: Date.now,
+    },
+    exercises: [
+      {
+        type: {
+          type: String,
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+        duration: {
+          type: Number,
+          required: true,
+        },
+        weight: Number,
+        reps: Number,
+        sets: Number,
+        distance: Number,
+      },
+    ],
+  },
+  {
+    toJson: {
+      virtuals: true,
+    },
+  }
+);
 
-const Excercise = mongoose.model("Excercise", excercise);
+// userSchema.virtual("domain").get(function () {
+//   return this.email.slice(this.email.indexOf("@") + 1);
+// });
 
-module.exports = Excercise;
+const Workout = mongoose.model("Workout", workout);
+
+module.exports = Workout;
